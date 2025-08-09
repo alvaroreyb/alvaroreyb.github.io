@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio profesional de Álvaro Rey Blanes — Ingeniero Biomédico especializado en IA y Software.">
+  <title>Álvaro Rey Blanes | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f9f9fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #00bfa6;
+      --brand-600: #04a48f;
+      --ring: rgba(0, 191, 166, 0.35);
+      --shadow: 0 6px 24px rgba(17, 24, 39, 0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #0b0f14;
+      --card: #0f151c;
+      --text: #e5e7eb;
+      --muted: #9aa4b2;
+      --brand: #00d1b2;
+      --brand-600: #13bfa0;
+      --ring: rgba(0, 209, 178, 0.35);
+      --shadow: 0 8px 30px rgba(0,0,0,0.55);
+    }
+    * {margin:0; padding:0; box-sizing:border-box;}
+    html {scroll-behavior:smooth;}
+    body {font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6;}
+    .container {max-width:1120px; margin:0 auto; padding:0 24px;}
+
+    /* Header */
+    header {position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8px); background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid color-mix(in srgb, var(--muted) 18%, transparent);}    
+    .nav {height:72px; display:flex; align-items:center; justify-content:space-between;}
+    .brand {display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;}
+    .brand__dot {width:10px; height:10px; border-radius:999px; background:var(--brand); box-shadow:0 0 0 6px var(--ring);}  
+    .nav ul {list-style:none; display:flex; gap:28px;}
+    .nav a {text-decoration:none; color:var(--text); font-weight:600; opacity:.9;}
+    .nav a:hover {color:var(--brand);}    
+
+    /* Theme toggle */
+    .theme-toggle {display:flex; align-items:center; gap:10px;}
+    .switch {position:relative; display:inline-block; width:54px; height:30px;}
+    .switch input {display:none;}
+    .slider {position:absolute; cursor:pointer; inset:0; background:color-mix(in srgb, var(--muted) 30%, transparent); transition:.3s; border-radius:999px; box-shadow:inset 0 0 0 2px color-mix(in srgb, var(--muted) 30%, transparent);}  
+    .slider:before {content:""; position:absolute; height:22px; width:22px; left:4px; top:4px; background:white; border-radius:50%; transition:.3s; box-shadow:var(--shadow);}  
+    input:checked + .slider {background:var(--brand);}    
+    input:checked + .slider:before {transform:translateX(24px);}  
+
+    /* Hero */
+    .hero {display:grid; grid-template-columns:1.2fr .8fr; gap:40px; align-items:center; padding:64px 0 32px;}
+    .hero h1 {font-size:clamp(28px, 5vw, 44px); line-height:1.15; margin-bottom:14px; letter-spacing:.2px;}
+    .hero p {color:var(--muted); margin-bottom:22px;}
+    .hero .cta {display:flex; gap:14px; flex-wrap:wrap;}
+    .btn {display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:10px; text-decoration:none; font-weight:700; box-shadow:var(--shadow);} 
+    .btn--primary {background:var(--brand); color:#041316;}
+    .btn--primary:hover {background:var(--brand-600);}  
+    .btn--ghost {border:1px solid color-mix(in srgb, var(--brand) 40%, transparent); color:var(--brand);}
+
+    .card {background:var(--card); border:1px solid color-mix(in srgb, var(--muted) 15%, transparent); border-radius:16px; padding:22px; box-shadow:var(--shadow);} 
+
+    /* Sections */
+    section {padding:60px 0;}
+    section h2 {font-size:clamp(22px, 3.6vw, 30px); margin-bottom:16px;}
+    .grid {display:grid; gap:18px;}
+
+    /* Projects */
+    .project {display:grid; grid-template-columns:1fr 2fr; gap:20px; align-items:center;}
+    .project__title {font-weight:800;}
+    .project__meta {color:var(--muted); font-size:.95rem;}
+
+    /* Lists */
+    .tags {display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+    .tag {background:color-mix(in srgb, var(--brand) 12%, transparent); color:var(--brand); border:1px solid color-mix(in srgb, var(--brand) 35%, transparent); padding:6px 10px; border-radius:999px; font-weight:600; font-size:.9rem;}
+
+    /* Footer */
+    footer {padding:28px 0; color:var(--muted); border-top:1px solid color-mix(in srgb, var(--muted) 15%, transparent);} 
+
+    /* --- Estilos extra SOLO para el contacto AJAX --- */
+    .contact-card {display:grid; gap:20px; padding:30px; background:linear-gradient(135deg, var(--card), color-mix(in srgb, var(--brand) 8%, var(--card))); border-radius:20px; box-shadow:var(--shadow); border:1px solid color-mix(in srgb, var(--muted) 15%, transparent);}
+    .contact-row {display:grid; gap:14px; grid-template-columns:1fr 1fr;}
+    .contact-input, .contact-textarea {
+      width:100%; padding:14px; border:1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+      border-radius:10px; background:var(--bg); color:var(--text); font-size:1rem; transition:0.3s;
+    }
+    .contact-input:focus, .contact-textarea:focus {border-color:var(--brand); outline:none; box-shadow:0 0 0 3px var(--ring);}
+    .contact-status {font-weight:600;}
+    .contact-status.success {color:var(--brand);}
+    .contact-status.error {color:#dc2626;}
+    .btn.is-loading {pointer-events:none; opacity:.75;}
+    .btn.is-loading::after {content:'· · ·'; margin-left:8px; letter-spacing:2px; animation:pulse 1.2s infinite;}
+    @keyframes pulse {0%{opacity:.2} 50%{opacity:1} 100%{opacity:.2}}
+    @media (max-width: 960px){ .hero {grid-template-columns:1fr; gap:22px;} .project{grid-template-columns:1fr;} .contact-row{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="brand__dot"></span> Álvaro Rey Blanes</div>
+      <ul>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#educacion">Educación</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="theme-toggle" title="Cambiar tema">
+        <label class="switch">
+          <input id="themeCheckbox" type="checkbox" aria-label="Cambiar a tema oscuro" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="container hero" id="inicio">
+      <div>
+        <h1>Ingeniería Biomédica, IA y Software aplicados a salud</h1>
+        <p>Desarrollo e investigo en soluciones con impacto real: superresolución de imágenes médicas, NLP clínico y robótica/IoT para cuidado domiciliario.</p>
+        <div class="cta">
+          <a class="btn btn--primary" href="#contacto">Contacto</a>
+          <a class="btn btn--ghost" href="https://github.com/alvaroreyb" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/alvaroreyb/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+      <div class="card">
+        <strong>Ubicación:</strong> Málaga, Andalucía<br/>
+        <strong>Email:</strong> <a href="mailto:alvaroreyb@protonmail.com">alvaroreyb@protonmail.com</a><br/>
+        <strong>Especialidad:</strong> IA, Software, Ingeniería Biomédica
+      </div>
+    </section>
+
+    <!-- SOBRE MI -->
+    <section class="container" id="sobre-mi">
+      <h2>Sobre mí</h2>
+      <div class="card">
+        <p>Graduado en Ingeniería Biomédica, con experiencia en aprendizaje automático y profundo aplicado a salud. En el TFG (Matrícula de Honor, 9.7) trabajamos en <em>superresolución</em> de imágenes de rodilla. Actualmente, en el proyecto <strong>Vivir en Casa</strong> investigamos robótica e IoT para cuidado domiciliario y organizamos actividades científicas internacionales. Paralelamente cursamos el Máster en Ingeniería de Software e IA (nota actual 8.7/10) centrando el TFM en <strong>detección de eventos oncológicos</strong> con NLP.</p>
+        <div class="tags" aria-label="Competencias clave">
+          <span class="tag">Python</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">Java</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Git</span>
+          <span class="tag">LaTeX</span>
+          <span class="tag">Aprendizaje automático</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Imágenes Biomédicas</span>
+          <span class="tag">IoT & Robótica</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="container" id="proyectos">
+      <h2>Proyectos</h2>
+      <div class="grid">
+        <article class="card project">
+          <div>
+            <div class="project__title">Superresolución de imágenes médicas</div>
+            <div class="project__meta">TFG premiado (Matrícula de Honor) — Deep Learning aplicado a imágenes de rodilla</div>
+            <div class="tags">
+              <span class="tag">CNN</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">Procesamiento de imagen</span>
+            </div>
+          </div>
+          <div>
+            <p>Desarrollamos y evaluamos modelos de DL para mejorar la resolución y la calidad diagnóstica. Resultados publicados y presentados en conferencias.</p>
+            <p><a class="btn btn--ghost" href="https://github.com/alvaroreyb" target="_blank" rel="noopener">Ver código</a></p>
+          </div>
+        </article>
+        <article class="card project">
+          <div>
+            <div class="project__title">Detección de eventos oncológicos (TFM)</div>
+            <div class="project__meta">NLP clínico — transformers en español</div>
+            <div class="tags">
+              <span class="tag">Transformers</span>
+              <span class="tag">Clasificación & NER</span>
+              <span class="tag">Hugging Face</span>
+            </div>
+          </div>
+          <div>
+            <p>Pipeline con XLM-R y modelos biomédicos en español para detectar recurrencias en textos clínicos. Énfasis en validación cruzada y F1.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section class="container" id="experiencia">
+      <h2>Experiencia</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>Investigador — Proyecto Vivir en Casa</strong> (09/2024 — 06/2025)<br>
+          <em>Universidad de Málaga · Málaga</em>
+          <ul style="margin-top:10px; padding-left:18px;">
+            <li>Investigación en soluciones innovadoras para el cuidado domiciliario mediante robótica y tecnologías IoT</li>
+            <li>Desarrollo y prueba de sistemas domóticos basados en IoT para apoyar a personas dependientes.</li>
+            <li>Organización de congresos y talleres internacionales.</li>
+            <li>Colaboración en equipos multidisciplinares para crear tecnologías sanitarias prácticas.</li>
+            <li>Evaluación de la experiencia de usuario y efectividad de dispositivos de asistencia domiciliaria.</li>
+            <li>Desarrollo de integraciones entre diferentes tecnologías para mejorar la interoperabilidad de los sistemas.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Profesor (Autónomo)</strong> (09/2023 — 08/2024) · Málaga
+          <ul style="margin-top:10px; padding-left:18px;">
+            <li>Tutoría en Matemáticas e Inglés, diseño de materiales personalizados.</li>
+            <li>Seguimiento y métodos para maximizar rendimiento y motivación.</li>
+            <li>Apoyo en el desarrollo de habilidades de estudio y pensamiento crítico.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCACIÓN -->
+    <section class="container" id="educacion">
+      <h2>Educación</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>Máster en Ingeniería de Software e IA</strong> — Universidad de Málaga (10/2024 – 09/2025, previsto). Nota actual: 8.7/10. TFM: NLP para detección de eventos oncológicos.</div>
+        <div class="card">
+          <strong>Grado en Ingeniería de la Salud (Mención en Ingeniería Biomédica)</strong> — Universidad de Málaga (10/2018 – 02/2024). TFG 9.7 (Matrícula de Honor).</div>
+        <div class="card">
+          <strong>Grado en Ingeniería Biomédica (Erasmus+)</strong> — Univerzita Karlova (09/2021 – 02/2022).</div>
+      </div>
+    </section>
+
+    <!-- CURSOS & ARTÍCULOS -->
+    <section class="container">
+      <h2>Formación adicional</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>Cursos y certificaciones</strong>
+          <ul style="margin-top:10px; padding-left:18px;">
+            <li>Ciberseguridad: Honeypots y Honeynets — Universidad de Málaga (12/2023)</li>
+            <li>Análisis de Datos con Python — Universidad de Málaga (10/2023)</li>
+            <li>Deep Learning con MATLAB — MathWorks Academy (09/2023)</li>
+            <li>Machine Learning con MATLAB — MathWorks Academy (09/2023)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Publicaciones</strong>
+          <p style="margin-top:10px;">Rey-Blanes, A., & Dominguez, E. (2024, August). <em>Applying Deep Learning Based Super-Resolution to Knee Imaging</em>. International Conference on AI in Healthcare (pp. 77-88). Springer Nature Switzerland.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO (AJAX + FORMSPREE) -->
+    <section class="container" id="contacto">
+      <h2>Contacto</h2>
+      <form id="contactForm" class="contact-card" action="https://formspree.io/f/mnnzljje" method="POST" novalidate>
+        <h3 style="margin:0; color:var(--brand); text-align:center;">Envíame un mensaje</h3>
+
+        <!-- Honeypot anti-spam (oculto para humanos) -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; height:0; width:0;">
+
+        <div class="contact-row">
+          <input class="contact-input" type="text" name="name" placeholder="Tu nombre" required>
+          <input class="contact-input" type="email" name="email" placeholder="Tu correo" required>
+        </div>
+
+        <textarea class="contact-textarea" name="message" placeholder="Escribe tu mensaje aquí..." rows="6" required></textarea>
+
+        <!-- Asunto opcional -->
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde el portfolio">
+
+        <!-- Estado accesible -->
+        <div id="contactStatus" class="contact-status" aria-live="polite"></div>
+
+        <button id="contactSubmit" class="btn btn--primary" type="submit">Enviar mensaje</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">&copy; 2025 Álvaro Rey Blanes · Málaga, Andalucía · <a href="mailto:alvaroreyb@protonmail.com">alvaroreyb@protonmail.com</a></div>
+  </footer>
+
+  <script>
+    // Preferencia de tema con localStorage + respeto de media query inicial
+    const root = document.documentElement;
+    const checkbox = document.getElementById('themeCheckbox');
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (prefersDark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial);
+    if (checkbox) checkbox.checked = initial === 'dark';
+    if (checkbox) {
+      checkbox.addEventListener('change', () => {
+        const theme = checkbox.checked ? 'dark' : 'light';
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      });
+    }
+
+    // ---- Contacto AJAX (Formspree) ----
+    (function () {
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('contactStatus');
+      const submit = document.getElementById('contactSubmit');
+
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Validación nativa
+        if (!form.checkValidity()) {
+          status.textContent = 'Por favor, completa los campos requeridos.';
+          status.className = 'contact-status error';
+          return;
+        }
+
+        status.textContent = '';
+        status.className = 'contact-status';
+        submit.classList.add('is-loading');
+
+        try {
+          const formData = new FormData(form);
+
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: formData
+          });
+
+          if (res.ok) {
+            form.reset();
+            status.textContent = '¡Gracias! Tu mensaje se ha enviado correctamente.';
+            status.className = 'contact-status success';
+          } else {
+            const data = await res.json().catch(() => ({}));
+            const msg = data && data.errors ? data.errors.map(e => e.message).join(', ') : 'No se pudo enviar el mensaje.';
+            status.textContent = `Error: ${msg}`;
+            status.className = 'contact-status error';
+          }
+        } catch (err) {
+          status.textContent = 'Ha ocurrido un error de red. Inténtalo de nuevo en unos segundos.';
+          status.className = 'contact-status error';
+        } finally {
+          submit.classList.remove('is-loading');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
